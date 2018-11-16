@@ -29,7 +29,9 @@ This model will examine 7 'basic' emotion categories:
 
 Example Emotional Expressions : ![Expressions image](images/example_imgs.png "Examples of Emotional Expressions")
 
-# Data: FERS2013
+# Data: FER2013
+
+https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data
 
 32,298 images across 7 categories
 
@@ -170,6 +172,7 @@ Example faces with [1, 5, 10, 20] components:
 # Future Directions
 
 1. Improve model performance
+1. Revisit preprocessing and image generation
 1. Figure out weighting to utilize full training dataset
 1. Image parsing to feed in new images, detect faces and categorize
 
