@@ -1,0 +1,47 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+
+  <title>Emotional Face Classifier</title>
+
+  <meta name="description" content="Emotional Face Classifier">
+  <meta name="author" content="Danny Lumian">
+
+</head>
+
+<body>
+
+  <h1>Your original image:</h1>
+
+    <img src="{{ orig_img }}" alt="Orig Image">
+
+  <h1>Found {{ faces|length }} Face(s)</h1>
+
+  <span style="color: blue; font-weight: bold;">Your Data</span>
+    {% for img in faces %}
+    <img src="{{ img }}" alt="Extracted Face">
+    {% endfor %}
+
+  <h1>Top emotion for each face: </h1>
+
+  <span style="color: blue; font-weight: bold;">Your Results</span>
+    {% for top_emo in top_emos %}
+    <span>  {{ top_emo }}  </span>
+    {% endfor %}
+
+
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data>
+        <p><input type=file name=file>
+          <input type=submit value=Upload>
+
+    </form>
+
+
+</body>
+</html>

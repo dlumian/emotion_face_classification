@@ -1,0 +1,64 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+
+  <title>Fraud Detection</title>
+
+  <meta name="description" content="Fraud Detection">
+  <meta name="author" content="Ryan Holway, Chris Lawton, Danny Lumin, and Paul Sandoval">
+
+  <script type="text/javascript"
+          src="{{ url_for('static', filename='jquery.js') }}">
+  </script>
+
+</head>
+
+<body>
+
+  <h1>Submit Your Data</h1>
+  <p>Paste your data into the input box below, and click the <span>Classify</span> button to predict if your data is fraud or not fraud.</p>
+
+    <textarea id="article", rows="12", cols="60"></textarea>
+    <button id="classify">Classify</button>
+
+    <p><span>Your data is best classified as: </span><span id="classification"></span>
+
+
+<script type="text/javascript">
+
+let get_article_text = function() {
+  return $("textarea#article").val();
+}
+
+let write_article_classification = function(classification) {
+  $("span#classification").text(classification);
+}
+
+let send_article_text = function() {
+  let article_text = get_article_text();
+  $.ajax({
+      url: "/predict",
+      type: "POST",
+      data: JSON.stringify({"article": article_text}),
+      contentType: "application/json",
+      success: function(data) {
+          console.log(data);
+          write_article_classification(data.prediction);
+      }
+  });
+}
+
+$(document).ready(function() {
+  $("button#classify").click(function() {
+    send_article_text();
+  });
+});
+
+</script>
+
+
+</body>
+</html>

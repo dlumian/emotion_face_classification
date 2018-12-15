@@ -1,0 +1,27 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+
+  <title>Fraud Detection</title>
+
+  <meta name="description" content="Fraud Detection">
+  <meta name="author" content="Ryan Holway, Chris Lawton, Danny Lumin, and Paul Sandoval">
+
+</head>
+
+<body>
+
+  <h1>Submit Your Sequence Number</h1>
+  <p>Paste your sequence number into the input box below, and click the <span>Classify</span> button to predict if your sequence number is fraud or not fraud.</p>
+
+  <form action="/predict" method='POST' >
+      <textarea name="fraud",
+                rows="1", cols="10"></textarea>
+      <button type="submit">Classify</button>
+  </form>
+
+</body>
+</html>
