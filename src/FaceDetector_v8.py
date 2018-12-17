@@ -152,21 +152,22 @@ class EmotionFacePredictor():
                 plt.clf()
                 break
         # When everything is done, release the capture
+        np.savetxt
         plt.title('Overall Emotion Ratio')
         plt.savefig(output_plot)
         video_capture.release()
         cv2.destroyAllWindows()
         plt.clf()
         plt.close()
-        cmd = 'eog '+ output_plot
-        os.system(cmd)
+        # cmd = 'eog '+ output_plot
+        # os.system(cmd)
         # img = mpimg.imread(output_plot)
         # plt.imshow(img)
         # plt.show()
         # cv2.imshow('Emotion Plot', output_plot)
 
 
-    def classify_faces_recorded_movie(self, file_path, write_imgs=False, output_plot='../images/movie.png'):
+    def classify_faces_recorded_movie(self, file_path=0, write_imgs=False, output_plot='../images/movie.png'):
         # self.capture_duration = duration
         start_time = time.time()
         video_capture = cv2.VideoCapture(file_path)
