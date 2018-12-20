@@ -1,7 +1,8 @@
 # Emotional Face Classification
 
 By Danny Lumian, PhD
-November, 2018
+
+Winter, 2018
 
 # Motivation
 
@@ -17,15 +18,17 @@ This project is aimed are providing such information for images and (eventually)
 
 While emotion space can be conceptualized in several ways, one useful model is to break emotions into discrete categories.
 
-This model will examine 7 'basic' emotion categories: 
+This model will examine 6 'basic' emotion categories: 
 
     0:'Angry'
-    1:'Disgust'
-    2:'Fear'
-    3:'Happy'
-    4:'Sad'
-    5:'Surprise'
-    6:'Neutral'
+    1:'Fear'
+    2:'Happy'
+    3:'Sad'
+    4:'Surprise'
+    5:'Neutral'
+
+*Note: The original dataset also contained disgust faces,
+however these were dropped due to a low number of sample images* 
 
 Example Emotional Expressions : ![Expressions image](images/example_imgs.png "Examples of Emotional Expressions")
 
@@ -33,17 +36,17 @@ Example Emotional Expressions : ![Expressions image](images/example_imgs.png "Ex
 
 https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data
 
-32,298 images across 7 categories
+|    | Label    |   # train |   # bal train |   # validation |   # test |
+|---:|:---------|----------:|--------------:|---------------:|---------:|
+|  0 | Angry    |      3995 |          3171 |            467 |      491 |
+|  1 | Fear     |      4097 |          3171 |            496 |      528 |
+|  2 | Happy    |      7215 |          3171 |            895 |      879 |
+|  3 | Sad      |      4830 |          3171 |            653 |      594 |
+|  4 | Surprise |      3171 |          3171 |            415 |      416 |
+|  5 | Neutral  |      4965 |          3171 |            607 |      626 |
 
-|    | Label    |   # train |   # bal train |   # test |
-|---:|:---------|----------:|--------------:|---------:|
-|  0 | Angry    |      4462 |           492 |      491 |
-|  1 | Disgust  |       492 |           492 |       55 |
-|  2 | Fear     |      4593 |           492 |      528 |
-|  3 | Happy    |      8110 |           492 |      879 |
-|  4 | Sad      |      5483 |           492 |      594 |
-|  5 | Surprise |      3586 |           492 |      416 |
-|  6 | Neutral  |      5572 |           492 |      626 |
+
+*Note: Disgust faces were dropped due to a low number (~500) of sample images* 
 
 
 # Data Exploration and Reduction
@@ -54,13 +57,13 @@ Average faces by category:
 
 ![PCA example faces](images/pca_images.png "PCA example faces")
 
-Example faces with [1, 5, 10, 20] components:
+Example faces with [1, 3, 5, 10] components:
 
 ![PCA example faces](images/pca_images_comparison.png "PCA example faces from components")
 
 ## NMF 
 
-Example faces with [1, 5, 10, 20] components:
+Example faces with [1, 3, 5, 10] components:
 
 ![NMF example faces](images/nmf_images_comparison.png "NMF example faces")
 
@@ -69,16 +72,31 @@ Example faces with [1, 5, 10, 20] components:
 
 ## Model Comparison
 
-| Model           |   Balanced |   Train Log Loss |   Test Log Loss |   Train Accuracy |   Test Accuracy |
-|:----------------|-----------:|-----------------:|----------------:|-----------------:|----------------:|
-| MNB             |          1 |           25.997 |          26.357 |            0.24  |           0.233 |
-| MNB             |          0 |           26.383 |          26.49  |            0.23  |           0.228 |
-| Random_forest   |          1 |            0.368 |           6.981 |            0.994 |           0.225 |
-| Random_forest   |          0 |            0.329 |           5.065 |            0.991 |           0.391 |
-| CNN Categorical |          1 |           17.063 |          24.963 |            0.466 |           0.242 |
-| CNN Continuous  |          1 |           19.464 |          23.281 |            0.411 |           0.305 |
-| CNN Categorical |          0 |           33.277 |          33.287 |            0.027 |           0.026 |
-| CNN Continuous  |          0 |           30.434 |          30.401 |            0.069 |           0.069 |
+| Model         |   Balanced |   Train Log Loss |   Test Log Loss |   Train Accuracy |   Test Accuracy |
+|:--------------|-----------:|-----------------:|----------------:|-----------------:|----------------:|
+| MNB           |          1 |           25.684 |          25.73  |            0.249 |           0.25  |
+| MNB           |          0 |           25.549 |          25.661 |            0.254 |           0.252 |
+| Random_forest |          1 |            0.337 |           5.225 |            0.991 |           0.327 |
+| Random_forest |          0 |            0.331 |           4.733 |            0.991 |           0.374 |
+| CNN_cat       |          0 |           13.109 |          19.494 |            0.604 |           0.423 |
+| CNN_cat_bal   |          1 |           14.909 |          20.532 |            0.555 |           0.395 |
+| CNN_cont      |          0 |           15.474 |          20.373 |            0.534 |           0.395 |
+| CNN_cont_bal  |          1 |           12.6   |          20.148 |            0.623 |           0.406 |
+
+
+### Models Using Leaky Relu (compared to Relu)
+
+| Model              |   Balanced |   Train Log Loss |   Test Log Loss |   Train Accuracy |   Test Accuracy |
+|:-------------------|-----------:|-----------------:|----------------:|-----------------:|----------------:|
+| MNB                |          1 |           25.684 |          25.73  |            0.249 |           0.25  |
+| MNB                |          0 |           25.549 |          25.661 |            0.254 |           0.252 |
+| Random_forest      |          1 |            0.337 |           5.225 |            0.991 |           0.327 |
+| Random_forest      |          0 |            0.331 |           4.733 |            0.991 |           0.374 |
+| CNN_cat_leaky      |          0 |            9.966 |          18.998 |            0.698 |           0.437 |
+| CNN_cat_bal_leaky  |          1 |           10.262 |          20.039 |            0.689 |           0.407 |
+| CNN_cont_leaky     |          0 |           10.798 |          18.471 |            0.679 |           0.458 |
+| CNN_cont_bal_leaky |          1 |           10.822 |          19.85  |            0.671 |           0.41  |
+
 
 
 ## Multinomial Naive Bayes
