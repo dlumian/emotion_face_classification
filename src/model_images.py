@@ -14,6 +14,7 @@ from keras.utils import plot_model
 from scipy import stats
 from collections import Counter
 from drawnow import drawnow
+import pdb 
 
 class ModelExaminer():
     '''
@@ -67,10 +68,20 @@ class ModelExaminer():
                     channel_image = layer_activation[0,
                                                      :, :,
                                                      col * images_per_row + row]
+                    # print(channel_image)
                     channel_image -= channel_image.mean() # Post-processes the feature to make it visually palatable
-                    channel_image /= channel_image.std()
+                    # print(channel_image)
+                    std = channel_image.std()
+                    print(std)
+                    if std == 0:
+                        channel_image /=1
+                    else:
+                        channel_image /= std 
+                    # print(channel_image)
                     channel_image *= 64
                     channel_image += 128
+                    # if layer_name == 'activation_10':
+                    #     pdb.set_trace()
                     channel_image = np.clip(channel_image, 0, 255).astype('uint8')
                     display_grid[col * size : (col + 1) * size, # Displays the grid
                                  row * size : (row + 1) * size] = channel_image
