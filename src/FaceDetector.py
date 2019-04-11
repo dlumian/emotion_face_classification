@@ -211,8 +211,8 @@ if __name__=='__main__':
     home = '/home/danny/Desktop/galvanize/emotion_face_classification/src/'
     # home = '/home/ubuntu/efc/src/'
     cv2_path = '/home/danny/anaconda3/lib/python3.6/site-packages/cv2/data/'
-    bestmodelfilepath = home + 'CNN_cont_leaky.hdf5'
+    bestmodelfilepath = home + 'CNN_cont.hdf5'
     efp = EmotionFacePredictor(home, cv2_path, bestmodelfilepath)
     efp.run_setup()
     # efp.classify_faces_image('./faces/face_174.jpg')
-    efp.classify_faces_video(duration=30)
+    efp.classify_faces_video()
