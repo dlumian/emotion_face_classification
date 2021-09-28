@@ -194,3 +194,4 @@ Example faces with [1, 3, 5, 10] components:
 1. Figure out weighting to utilize full training dataset
 1. Image parsing to feed in new images, detect faces and categorize
 
+
